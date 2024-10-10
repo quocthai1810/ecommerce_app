@@ -55,7 +55,7 @@ class _EntryPointState extends State<EntryPoint> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.pushNamed(context, searchScreenRoute);
+              // Navigator.pushNamed(context, searchScreenRoute);
             },
             icon: SvgPicture.asset(
               "assets/icons/Search.svg",
@@ -67,7 +67,7 @@ class _EntryPointState extends State<EntryPoint> {
           ),
           IconButton(
             onPressed: () {
-              Navigator.pushNamed(context, notificationsScreenRoute);
+              // Navigator.pushNamed(context, notificationsScreenRoute);
             },
             icon: SvgPicture.asset(
               "assets/icons/Notification.svg",

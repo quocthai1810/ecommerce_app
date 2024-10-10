@@ -2,8 +2,10 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:shop/screens/auth/views/components/sign_up_form.dart';
 import 'package:shop/route/route_constants.dart';
+import 'package:get/get.dart';
 
 import '../../../constants.dart';
+import '../controller/signup_controller.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -13,10 +15,12 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  final _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    final signUpController = Get.find<SignUpController>();
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -45,9 +49,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   const SizedBox(height: defaultPadding),
                   Row(
                     children: [
-                      Checkbox(
-                        onChanged: (value) {},
-                        value: false,
+                      Obx(
+                        () => Checkbox(
+                          onChanged: (value) {
+                            signUpController
+                                .toggleTermsAccepted(value ?? false);
+                          },
+                          value: signUpController.isTermsAccepted.value,
+                        ),
                       ),
                       Expanded(
                         child: Text.rich(
@@ -57,8 +66,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               TextSpan(
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
-                                    Navigator.pushNamed(
-                                        context, termsOfServicesScreenRoute);
+                                    // Navigator.pushNamed(
+                                    //     context, termsOfServicesScreenRoute);
                                   },
                                 text: " Terms of service ",
                                 style: const TextStyle(
@@ -76,14 +85,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ],
                   ),
                   const SizedBox(height: defaultPadding * 2),
-                  ElevatedButton(
-                    onPressed: () {
-                      // There is 2 more screens while user complete their profile
-                      // afre sign up, it's available on the pro version get it now
-                      // 🔗 https://theflutterway.gumroad.com/l/fluttershop
-                      Navigator.pushNamed(context, entryPointScreenRoute);
-                    },
-                    child: const Text("Continue"),
+                  Obx(
+                    () => ElevatedButton(
+                      onPressed: signUpController.isTermsAccepted.value
+                          ? () {
+                              Get.toNamed(logInScreenRoute);
+                            }
+                          : null,
+                      child: const Text("Continue"),
+                    ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -91,7 +101,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       const Text("Do you have an account?"),
                       TextButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, logInScreenRoute);
+                          // Navigator.pushNamed(context, logInScreenRoute);
+                          Get.toNamed(logInScreenRoute);
                         },
                         child: const Text("Log in"),
                       )

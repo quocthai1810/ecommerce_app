@@ -17,19 +17,21 @@ class BuyFullKit extends StatefulWidget {
 }
 
 class _BuyFullKitState extends State<BuyFullKit> {
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [FloatingActionButton(onPressed: () { Navigator.pop(context); },
-
-              ),
-          const Text('Trang chưa tạo',  style: TextStyle(fontSize: 30),)]
+        body: Center(
+      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        FloatingActionButton(
+          onPressed: () {
+            // Navigator.pop(context);
+          },
         ),
-      ));
+        const Text(
+          'Trang chưa tạo',
+          style: TextStyle(fontSize: 30),
+        )
+      ]),
+    ));
   }
 }

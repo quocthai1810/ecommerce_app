@@ -124,7 +124,7 @@ class ProductDetailsScreen extends StatelessWidget {
               title: "Reviews",
               isShowBottomBorder: true,
               press: () {
-                Navigator.pushNamed(context, productReviewsScreenRoute);
+                // Navigator.pushNamed(context, productReviewsScreenRoute);
               },
             ),
             SliverPadding(

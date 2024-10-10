@@ -53,7 +53,7 @@ class Categories extends StatelessWidget {
                 isActive: index == 0,
                 press: () {
                   if (demoCategories[index].route != null) {
-                    Navigator.pushNamed(context, demoCategories[index].route!);
+                    // Navigator.pushNamed(context, demoCategories[index].route!);
                   }
                 },
               ),
