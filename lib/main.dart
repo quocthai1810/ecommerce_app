@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:shop/route/apppages.dart';
 import 'package:shop/route/route_constants.dart';
@@ -5,7 +6,9 @@ import 'package:shop/route/router.dart' as router;
 import 'package:shop/theme/app_theme.dart';
 import 'package:get/get.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 

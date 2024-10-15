@@ -22,14 +22,14 @@ class SignUpForm extends StatelessWidget {
       child: Column(
         children: [
           TextFormField(
-            onSaved: (emal) {
-              // Email
+            onSaved: (email) {
+              signUpController.email = email!;
             },
             validator: emaildValidator.call,
             textInputAction: TextInputAction.next,
             keyboardType: TextInputType.emailAddress,
             decoration: InputDecoration(
-              hintText: "Email address",
+              hintText: "Email address (*)",
               prefixIcon: Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: defaultPadding * 0.75),
@@ -51,13 +51,16 @@ class SignUpForm extends StatelessWidget {
           ),
           const SizedBox(height: defaultPadding),
           TextFormField(
+            onChanged: (password){
+              signUpController.password = password;
+            },
             onSaved: (pass) {
               // Password
             },
             validator: passwordValidator.call,
             obscureText: true,
             decoration: InputDecoration(
-              hintText: "Password",
+              hintText: "Password (*)",
               prefixIcon: Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: defaultPadding * 0.75),
@@ -82,10 +85,10 @@ class SignUpForm extends StatelessWidget {
             onSaved: (pass) {
               // Password
             },
-            // validator: passwordValidator.call,
+            validator: (val)=> signUpController.confirmPasswordValidator(val),
             obscureText: true,
             decoration: InputDecoration(
-              hintText: "Confirm Password",
+              hintText: "Confirm Password (*)",
               prefixIcon: Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: defaultPadding * 0.75),
@@ -109,15 +112,15 @@ class SignUpForm extends StatelessWidget {
           Obx(
             () => TextFormField(
               readOnly: true,
-              onSaved: (pass) {
-                // Password
+              controller: signUpController.dateController,
+              onSaved: (date) {
+                signUpController.dateController.text = date!;
               },
               onTap: () => signUpController.selectDate(context),
-              // validator: passwordValidator.call,
-              obscureText: true,
+              validator: (val) => signUpController.dateValidator(val),
               decoration: InputDecoration(
-                hintText:
-                    "${signUpController.selectedDate.value.day}/${signUpController.selectedDate.value.month}/${signUpController.selectedDate.value.year}",
+                hintText:signUpController.selectedDate.value!=DateTime.now()?'Date of birth (*)':null
+        ,
                 prefixIcon: Padding(
                   padding: const EdgeInsets.symmetric(
                       vertical: defaultPadding * 0.75),
@@ -140,13 +143,13 @@ class SignUpForm extends StatelessWidget {
           ),
           const SizedBox(height: defaultPadding),
           TextFormField(
-            onSaved: (pass) {
-              // Password
+            onSaved: (phoneNumber) {
+              signUpController.phoneNumber = phoneNumber!;
             },
-            validator: passwordValidator.call,
+            validator: phoneValidator.call,
             keyboardType: TextInputType.phone,
             decoration: InputDecoration(
-              hintText: "Phone Number",
+              hintText: "Phone Number (*)",
               prefixIcon: Padding(
                 padding:
                 const EdgeInsets.symmetric(vertical: defaultPadding * 0.75),
@@ -168,11 +171,12 @@ class SignUpForm extends StatelessWidget {
           ),
           const SizedBox(height: defaultPadding),
           DropdownButtonFormField<String>(
-            onSaved: (value) {
-              // Xử lý giá trị giới tính
+            onSaved: (gender) {
+              signUpController.selectedGender = gender;
             },
+            validator: (val) => signUpController.genderValidator(val),
             decoration: InputDecoration(
-              hintText: "Gender",
+              hintText: "Gender (*)",
               prefixIcon: Padding(
                 padding: const EdgeInsets.symmetric(vertical: defaultPadding * 0.75),
                 child: SvgPicture.asset(
@@ -189,18 +193,21 @@ class SignUpForm extends StatelessWidget {
               filled: true,
               fillColor: Colors.white,
             ),
-            items: [
+            items: const [
               DropdownMenuItem(
                 value: "Male",
-                child: Text("Male"),
+                child: Opacity(opacity: 0.8,
+                child: Text("Male")),
               ),
               DropdownMenuItem(
                 value: "Female",
-                child: Text("Female"),
+                child: Opacity(opacity: 0.8,
+                child: Text("Female",)),
               ),
               DropdownMenuItem(
                 value: "Other",
-                child: Text("Other"),
+                child: Opacity(opacity: 0.8,
+                child: Text("Other")),
               ),
             ],
             onChanged: (value) {

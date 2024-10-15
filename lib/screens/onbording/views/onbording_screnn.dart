@@ -79,7 +79,7 @@ class _OnBordingScreenState extends State<OnBordingScreen> {
                 child: TextButton(
                   onPressed: () {
                     // Navigator.pushNamed(context, logInScreenRoute);
-                    Get.toNamed(logInScreenRoute);
+                    Get.offAllNamed(logInScreenRoute);
                   },
                   child: Text(
                     "Skip",
@@ -128,7 +128,7 @@ class _OnBordingScreenState extends State<OnBordingScreen> {
                               curve: Curves.ease, duration: defaultDuration);
                         } else {
                           // Navigator.pushNamed(context, logInScreenRoute);
-                          Get.toNamed(logInScreenRoute);
+                          Get.offAllNamed(logInScreenRoute);
                         }
                       },
                       style: ElevatedButton.styleFrom(

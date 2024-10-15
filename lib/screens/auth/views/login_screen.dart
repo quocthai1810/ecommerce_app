@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:shop/constants.dart';
 import 'package:shop/route/route_constants.dart';
 import 'package:get/get.dart';
+import 'package:shop/screens/home/views/home_screen.dart';
 
+import '../controller/signin_controller.dart';
 import 'components/login_form.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -18,6 +20,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    final signInController = Get.find<SignInController>();
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -59,6 +62,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   ElevatedButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
+                        _formKey.currentState!.save();
+                        signInController.signIn();
                         // Navigator.pushNamedAndRemoveUntil(
                         //     context,
                         //     entryPointScreenRoute,
@@ -74,7 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       TextButton(
                         onPressed: () {
                           // Navigator.pushNamed(context, signUpScreenRoute);
-                          Get.toNamed(signUpScreenRoute);
+                          Get.offAllNamed(signUpScreenRoute);
                         },
                         child: const Text("Sign up"),
                       )

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 
 // Just for demo
@@ -73,9 +74,20 @@ final passwordValidator = MultiValidator([
       errorText: 'passwords must have at least one special character')
 ]);
 
+
 final emaildValidator = MultiValidator([
   RequiredValidator(errorText: 'Email is required'),
   EmailValidator(errorText: "Enter a valid email address"),
 ]);
 
-const pasNotMatchErrorText = "passwords do not match";
+final phoneValidator = MultiValidator([
+  RequiredValidator(errorText: 'Vui lòng nhập SĐT này'),
+  MinLengthValidator(10, errorText: 'SĐT ít nhất 10 số'),
+  PatternValidator(r'^\d+$',
+      errorText: 'Chỉ được nhập số')
+]);
+
+
+
+
+

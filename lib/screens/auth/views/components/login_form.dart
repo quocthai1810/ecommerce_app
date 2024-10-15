@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 import '../../../../constants.dart';
+import '../../controller/signin_controller.dart';
 
 class LogInForm extends StatelessWidget {
   const LogInForm({
@@ -13,13 +15,15 @@ class LogInForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final signInController = Get.find<SignInController>();
+
     return Form(
       key: formKey,
       child: Column(
         children: [
           TextFormField(
-            onSaved: (emal) {
-              // Email
+            onSaved: (email) {
+              signInController.email = email!;
             },
             validator: emaildValidator.call,
             textInputAction: TextInputAction.next,
@@ -46,8 +50,8 @@ class LogInForm extends StatelessWidget {
           ),
           const SizedBox(height: defaultPadding),
           TextFormField(
-            onSaved: (pass) {
-              // Password
+            onSaved: (password) {
+              signInController.password = password!;
             },
             validator: passwordValidator.call,
             obscureText: true,
