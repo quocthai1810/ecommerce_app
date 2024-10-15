@@ -106,7 +106,7 @@ class SignUpController extends GetxController {
         'phoneNumber': phoneNumber
       });
 
-      Get.toNamed(signUpVerificationScreenRoute);
+      Get.offAllNamed(signUpVerificationScreenRoute);
 
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {

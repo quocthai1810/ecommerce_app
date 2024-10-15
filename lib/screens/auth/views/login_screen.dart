@@ -4,6 +4,7 @@ import 'package:shop/route/route_constants.dart';
 import 'package:get/get.dart';
 import 'package:shop/screens/home/views/home_screen.dart';
 
+import '../../../const_func.dart';
 import '../controller/signin_controller.dart';
 import 'components/login_form.dart';
 
@@ -23,72 +24,88 @@ class _LoginScreenState extends State<LoginScreen> {
     final signInController = Get.find<SignInController>();
 
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Image.asset(
-              "assets/images/login_dark.png",
-              fit: BoxFit.cover,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(defaultPadding),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Welcome back!",
-                    style: Theme.of(context).textTheme.headlineSmall,
-                  ),
-                  const SizedBox(height: defaultPadding / 2),
-                  const Text(
-                    "Log in with your data that you intered during your registration.",
-                  ),
-                  const SizedBox(height: defaultPadding),
-                  LogInForm(formKey: _formKey),
-                  Align(
-                    child: TextButton(
-                      child: const Text("Forgot password"),
-                      onPressed: () {
-                        // Navigator.pushNamed(
-                        //     context, passwordRecoveryScreenRoute);
-                      },
-                    ),
-                  ),
-                  SizedBox(
-                    height: size.height > 700
-                        ? size.height * 0.1
-                        : defaultPadding,
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        _formKey.currentState!.save();
-                        signInController.signIn();
-                        // Navigator.pushNamedAndRemoveUntil(
-                        //     context,
-                        //     entryPointScreenRoute,
-                        //     ModalRoute.withName(logInScreenRoute));
-                      }
-                    },
-                    child: const Text("Log in"),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+      body: Center(
+        child: Obx(()=>
+           AbsorbPointer(
+            absorbing: signInController.isLoading.value,
+            child: Stack(
+              alignment: Alignment.center,
+              children:[ Opacity(
+                opacity: signInController.isLoading.value?0.6:1,
+                child: SingleChildScrollView(
+                  child: Column(
                     children: [
-                      const Text("Don't have an account?"),
-                      TextButton(
-                        onPressed: () {
-                          // Navigator.pushNamed(context, signUpScreenRoute);
-                          Get.offAllNamed(signUpScreenRoute);
-                        },
-                        child: const Text("Sign up"),
+                      Image.asset(
+                        "assets/images/login_dark.png",
+                        fit: BoxFit.cover,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(defaultPadding),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Welcome back!",
+                              style: Theme.of(context).textTheme.headlineSmall,
+                            ),
+                            const SizedBox(height: defaultPadding / 2),
+                            const Text(
+                              "Log in with your data that you intered during your registration.",
+                            ),
+                            const SizedBox(height: defaultPadding),
+                            LogInForm(formKey: _formKey),
+                            Align(
+                              child: TextButton(
+                                child: const Text("Forgot password"),
+                                onPressed: () {
+                                  // Navigator.pushNamed(
+                                  //     context, passwordRecoveryScreenRoute);
+                                },
+                              ),
+                            ),
+                            SizedBox(
+                              height: size.height > 700
+                                  ? size.height * 0.1
+                                  : defaultPadding,
+                            ),
+                            ElevatedButton(
+                              onPressed: () {
+                                if (_formKey.currentState!.validate()) {
+                                  _formKey.currentState!.save();
+                                  signInController.signIn();
+                                  // Navigator.pushNamedAndRemoveUntil(
+                                  //     context,
+                                  //     entryPointScreenRoute,
+                                  //     ModalRoute.withName(logInScreenRoute));
+                                }
+                              },
+                              child: const Text("Log in"),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text("Don't have an account?"),
+                                TextButton(
+                                  onPressed: () {
+                                    // Navigator.pushNamed(context, signUpScreenRoute);
+                                    Get.offAllNamed(signUpScreenRoute);
+                                  },
+                                  child: const Text("Sign up"),
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
                       )
                     ],
                   ),
-                ],
+                ),
               ),
-            )
-          ],
+                if (signInController.isLoading.value)
+                  ConstFunc.circularProgress('Đang đăng nhập')
+              ]
+            ),
+          ),
         ),
       ),
     );
