@@ -4,6 +4,7 @@ import 'package:shop/screens/profile/views/components/profile_info.dart';
 import 'package:get/get.dart';
 
 import '../controller/profile_controller.dart';
+import 'edit_profile.dart';
 
 class InfoProfileScreen extends StatelessWidget {
   const InfoProfileScreen({super.key});
@@ -28,7 +29,11 @@ class InfoProfileScreen extends StatelessWidget {
         ),
         actions: [
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              Get.to(const EditProfileScreen(),
+                  transition: Transition.rightToLeft,
+                  duration: const Duration(milliseconds: 500));
+            },
             child: const Text(
               'Edit',
               style: TextStyle(color: primaryColor, fontSize: 16),

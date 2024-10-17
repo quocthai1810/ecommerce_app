@@ -6,6 +6,7 @@ import 'package:shop/constants.dart';
 import 'package:shop/route/screen_export.dart';
 import 'package:get/get.dart';
 import 'package:shop/screens/profile/controller/profile_controller.dart';
+import 'package:shop/screens/profile/views/info_profile.dart';
 
 import 'components/profile_card.dart';
 import 'components/profile_menu_item_list_tile.dart';
@@ -15,6 +16,7 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final editProfileController = Get.find<EditProfileController>();
     return Scaffold(
       body: ListView(
         children: [
@@ -25,7 +27,9 @@ class ProfileScreen extends StatelessWidget {
             // proLableText: "Sliver",
             // isPro: true, if the user is pro
             press: () {
-              Get.toNamed(infoProfileScreenRoute);
+              Get.to(const InfoProfileScreen(),
+                  transition: Transition.rightToLeft,
+                  duration: const Duration(milliseconds: 500));
               // Navigator.pushNamed(context, userInfoScreenRoute);
             },
           ),
@@ -147,7 +151,9 @@ class ProfileScreen extends StatelessWidget {
 
           // Log Out
           ListTile(
-            onTap: () {},
+            onTap: () {
+              editProfileController.logOut();
+            },
             minLeadingWidth: 24,
             leading: SvgPicture.asset(
               "assets/icons/Logout.svg",

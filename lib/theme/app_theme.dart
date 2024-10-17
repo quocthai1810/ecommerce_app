@@ -14,7 +14,7 @@ class AppTheme {
       primarySwatch: primaryMaterialColor,
       primaryColor: primaryColor,
       scaffoldBackgroundColor: Colors.white,
-      iconTheme: const IconThemeData(color: blackColor),
+      iconTheme: const IconThemeData(color: Colors.black),
       textTheme: const TextTheme(
         bodyMedium: TextStyle(color: blackColor40),
       ),

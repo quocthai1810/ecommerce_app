@@ -12,7 +12,6 @@ class SignInController extends GetxController {
   late String password;
 
   var isLoading = false.obs;
-  late String userId;
 
   Future<void> signIn() async {
 
@@ -25,7 +24,6 @@ class SignInController extends GetxController {
       );
 
       if (userCredential.user!.emailVerified) {
-        userId = userCredential.user!.uid;
         Get.offAllNamed(entryPointScreenRoute);
       } else {
         await userCredential.user?.sendEmailVerification();
@@ -37,6 +35,7 @@ class SignInController extends GetxController {
     } finally {
       isLoading.value = false; // Kết thúc loading
     }
+    Get.snackbar('Thông báo', 'Đăng nhập thành công !');
   }
 
 

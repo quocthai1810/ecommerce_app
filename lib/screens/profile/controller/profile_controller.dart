@@ -4,6 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shop/constants.dart';
 
+import '../../../route/route_constants.dart';
+
 class EditProfileController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -61,6 +63,16 @@ class EditProfileController extends GetxController {
         );
       },
     );
+  }
+
+  void logOut() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      Get.snackbar('Thông báo','Đăng xuất thành công');
+    } catch (e) {
+      Get.snackbar('Thông báo','Đã xảy ra lỗi: $e');
+    }
+    Get.offAllNamed(logInScreenRoute);
   }
 
 }

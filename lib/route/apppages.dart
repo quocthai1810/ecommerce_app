@@ -9,6 +9,7 @@ import 'package:shop/screens/profile/controller/profile_controller.dart';
 import '../screens/auth/controller/signup_binding.dart';
 import '../screens/auth/views/login_screen.dart';
 import '../screens/auth/views/signup_screen.dart';
+import '../screens/profile/views/edit_profile.dart';
 import '../screens/profile/views/info_profile.dart';
 import '../screens/profile/views/profile_screen.dart';
 import 'route_constants.dart';
@@ -45,9 +46,9 @@ class AppPages {
       name: infoProfileScreenRoute,
       page: () => const InfoProfileScreen(),
     ),
-    // GetPage(
-    //   name: editProfileScreenRoute,
-    //   page: () => const EditProfileScreen(),
-    // ),
+    GetPage(
+      name: editProfileScreenRoute,
+      page: () => const EditProfileScreen(),
+    ),
   ];
 }
