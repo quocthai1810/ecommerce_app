@@ -78,13 +78,14 @@ class SignUpController extends GetxController {
   // chọn sdt
   late String phoneNumber;
 
+  late String fullName;
+
   //Đăng kí user lên Firebase
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   var isLoading = false.obs; // Biến để theo dõi trạng thái loading
 
   Future<void> signUp() async {
-
     isLoading.value = true;
 
     try {
@@ -101,21 +102,50 @@ class SignUpController extends GetxController {
           .collection('users')
           .doc(userCredential.user!.uid)
           .set({
+        'fullName': fullName,
         'gender': selectedGender,
         'dateOfBirth': dateController.text,
-        'phoneNumber': phoneNumber
+        'phoneNumber': phoneNumber,
+        'avatar': 'assets/images/user.jpg'
       });
 
       Get.offAllNamed(signUpVerificationScreenRoute);
-
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
-        Get.snackbar('Thông báo','Email này đã được sử dụng. Vui lòng chọn email khác.');
+        Get.snackbar('Thông báo',
+            'Email này đã được sử dụng. Vui lòng chọn email khác.');
       }
     } catch (e) {
-      Get.snackbar('Thông báo','Đăng kí không thành công !');
+      Get.snackbar('Thông báo', 'Đăng kí không thành công !');
     } finally {
-        isLoading.value = false; // Kết thúc loading
+      isLoading.value = false; // Kết thúc loading
+    }
+  }
+
+  Future<void> resendVerificationEmail() async {
+    User? currentUser = _auth.currentUser;
+    if (currentUser != null) {
+      await currentUser.reload(); // Cập nhật thông tin người dùng
+      currentUser = _auth.currentUser;
+      if (!currentUser!.emailVerified) {
+        try {
+          await currentUser.sendEmailVerification();
+          Get.snackbar('Thông báo',
+              'Mã xác thực đã được gửi lại. Vui lòng kiểm tra email của bạn.');
+        } on FirebaseAuthException catch (e) {
+          Get.snackbar(
+              'Thông báo', 'Không thể gửi mã xác thực. Vui lòng thử lại sau.');
+        } catch (e) {
+          Get.snackbar('Thông báo', 'Đã có lỗi xảy ra. Vui lòng thử lại.');
+        }
+      } else{
+        Get.snackbar(
+            'Thông báo', 'Email đã xác thực. Bạn có thể đăng nhập bằng tài khoản này !');
+      }
+    }
+    else {
+      Get.snackbar(
+          'Thông báo', 'Bạn chưa đăng nhập. Vui lòng đăng nhập trước.');
     }
   }
 }

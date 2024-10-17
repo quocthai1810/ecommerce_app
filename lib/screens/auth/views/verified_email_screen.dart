@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shop/route/route_constants.dart';
+import 'package:shop/screens/auth/controller/signup_controller.dart';
 
 class VerificationScreen extends StatelessWidget {
   const VerificationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final signUpController = Get.find<SignUpController>();
+
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+            onPressed: () => Get.offAllNamed(logInScreenRoute),
+            icon: const Icon(Icons.arrow_back)),
         title: const Text('Xác Thực Email'),
         centerTitle: true,
       ),
@@ -30,6 +38,7 @@ class VerificationScreen extends StatelessWidget {
               const SizedBox(height: 40),
               ElevatedButton(
                 onPressed: () {
+                  signUpController.resendVerificationEmail();
                   // Xử lý nút "Gửi lại mã" hoặc chuyển hướng
                   // bạn có thể thêm logic gửi lại mã xác thực ở đây
                 },

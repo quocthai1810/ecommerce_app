@@ -26,125 +26,111 @@ class _SignUpScreenState extends State<SignUpScreen> {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         body: Center(
-          child: Obx(
-            () => AbsorbPointer(
-              absorbing: signUpController.isLoading.value,
-              child:  Stack(alignment: Alignment.center,
-                children: [Opacity(
-                  opacity: signUpController.isLoading.value? 0.6 : 1,
-                  child: SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              Image.asset(
-                                "assets/images/signUp_dark.png",
-                                height: MediaQuery.of(context).size.height * 0.35,
-                                width: double.infinity,
-                                fit: BoxFit.cover,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(defaultPadding),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Let’s get started!",
-                                      style:
-                                          Theme.of(context).textTheme.headlineSmall,
-                                    ),
-                                    const SizedBox(height: defaultPadding / 2),
-                                    const Text(
-                                      "Please enter your valid data in order to create an account.",
-                                    ),
-                                    const SizedBox(height: defaultPadding),
-                                    SignUpForm(formKey: _formKey),
-                                    const SizedBox(height: defaultPadding),
-                                    Row(
+            child: ConstFunc.showLoading(
+                SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Image.asset(
+                        "assets/images/signUp_dark.png",
+                        height: MediaQuery.of(context).size.height * 0.35,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(defaultPadding),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Let’s get started!",
+                              style: Theme.of(context).textTheme.headlineSmall,
+                            ),
+                            const SizedBox(height: defaultPadding / 2),
+                            const Text(
+                              "Please enter your valid data in order to create an account.",
+                            ),
+                            const SizedBox(height: defaultPadding),
+                            SignUpForm(formKey: _formKey),
+                            const SizedBox(height: defaultPadding),
+                            Row(
+                              children: [
+                                Obx(
+                                  () => Checkbox(
+                                    onChanged: (value) {
+                                      signUpController
+                                          .toggleTermsAccepted(value ?? false);
+                                    },
+                                    value:
+                                        signUpController.isTermsAccepted.value,
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Text.rich(
+                                    TextSpan(
+                                      text: "I agree with the",
                                       children: [
-                                        Obx(
-                                          () => Checkbox(
-                                            onChanged: (value) {
-                                              signUpController.toggleTermsAccepted(
-                                                  value ?? false);
+                                        TextSpan(
+                                          recognizer: TapGestureRecognizer()
+                                            ..onTap = () {
+                                              // Navigator.pushNamed(
+                                              //     context, termsOfServicesScreenRoute);
                                             },
-                                            value: signUpController
-                                                .isTermsAccepted.value,
+                                          text: " Terms of service ",
+                                          style: const TextStyle(
+                                            color: primaryColor,
+                                            fontWeight: FontWeight.w500,
                                           ),
                                         ),
-                                        Expanded(
-                                          child: Text.rich(
-                                            TextSpan(
-                                              text: "I agree with the",
-                                              children: [
-                                                TextSpan(
-                                                  recognizer: TapGestureRecognizer()
-                                                    ..onTap = () {
-                                                      // Navigator.pushNamed(
-                                                      //     context, termsOfServicesScreenRoute);
-                                                    },
-                                                  text: " Terms of service ",
-                                                  style: const TextStyle(
-                                                    color: primaryColor,
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
-                                                ),
-                                                const TextSpan(
-                                                  text: "& privacy policy.",
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        )
+                                        const TextSpan(
+                                          text: "& privacy policy.",
+                                        ),
                                       ],
                                     ),
-                                    const SizedBox(height: defaultPadding * 2),
-                                    Obx(
-                                      () => ElevatedButton(
-                                        onPressed:
-                                            signUpController.isTermsAccepted.value
-                                                ? () {
-                                                    // if (_formKey.currentState!.validate()) {
-                                                    //   _formKey.currentState!.save();
-                                                    //   signUpController.signUp();
-                                                    //   // Navigator.pushNamedAndRemoveUntil(
-                                                    //   //     context,
-                                                    //   //     entryPointScreenRoute,
-                                                    //   //     ModalRoute.withName(logInScreenRoute));
-                                                    //   // Get.offAllNamed(logInScreenRoute);
-                                                    // }
-                                                    _formKey.currentState!.save();
-                                                    signUpController.signUp();
-                                                  }
-                                                : null,
-                                        child: const Text("Sign up"),
-                                      ),
-                                    ),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        const Text("Do you have an account?"),
-                                        TextButton(
-                                          onPressed: () {
-                                            // Navigator.pushNamed(context, logInScreenRoute);
-                                            Get.offAllNamed(logInScreenRoute);
-                                          },
-                                          child: const Text("Log in"),
-                                        )
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
+                                  ),
+                                )
+                              ],
+                            ),
+                            const SizedBox(height: defaultPadding * 2),
+                            Obx(
+                              () => ElevatedButton(
+                                onPressed: signUpController
+                                        .isTermsAccepted.value
+                                    ? () {
+                                        if (_formKey.currentState!.validate()) {
+                                          _formKey.currentState!.save();
+                                          signUpController.signUp();
+                                          //   // Navigator.pushNamedAndRemoveUntil(
+                                          //   //     context,
+                                          //   //     entryPointScreenRoute,
+                                          //   //     ModalRoute.withName(logInScreenRoute));
+                                          //   // Get.offAllNamed(logInScreenRoute);
+                                        }
+                                      }
+                                    : null,
+                                child: const Text("Sign up"),
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text("Do you have an account?"),
+                                TextButton(
+                                  onPressed: () {
+                                    // Navigator.pushNamed(context, logInScreenRoute);
+                                    Get.offAllNamed(logInScreenRoute);
+                                  },
+                                  child: const Text("Log in"),
+                                )
+                              ],
+                            ),
+                          ],
                         ),
+                      )
+                    ],
+                  ),
                 ),
-                  if (signUpController.isLoading.value)
-                       ConstFunc.circularProgress('Đang đăng kí')
-                      ]
-              ),
-            ),
-          ),
-        ),
+                'Đang đăng kí',
+                signUpController)),
       ),
     );
   }

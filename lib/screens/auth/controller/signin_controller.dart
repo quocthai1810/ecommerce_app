@@ -12,11 +12,12 @@ class SignInController extends GetxController {
   late String password;
 
   var isLoading = false.obs;
+  late String userId;
 
   Future<void> signIn() async {
 
     isLoading.value = true;
-
+    print('Attempting to sign in with email: $email and password: $password');
     try {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
         email: email,
@@ -24,12 +25,14 @@ class SignInController extends GetxController {
       );
 
       if (userCredential.user!.emailVerified) {
+        userId = userCredential.user!.uid;
         Get.offAllNamed(entryPointScreenRoute);
       } else {
         await userCredential.user?.sendEmailVerification();
         Get.offAllNamed(signUpVerificationScreenRoute);
       }
     } catch (e) {
+      print('lỗi $e');
       Get.snackbar('Thông báo','Email hoặc Password không chính xác');
     } finally {
       isLoading.value = false; // Kết thúc loading

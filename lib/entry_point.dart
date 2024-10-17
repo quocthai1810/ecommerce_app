@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shop/constants.dart';
 import 'package:shop/route/screen_export.dart';
+import 'package:shop/screens/profile/controller/profile_binding.dart';
 
 class EntryPoint extends StatefulWidget {
   const EntryPoint({super.key});

@@ -80,6 +80,10 @@ final emaildValidator = MultiValidator([
   EmailValidator(errorText: "Enter a valid email address"),
 ]);
 
+final nameValidator = MultiValidator([
+  RequiredValidator(errorText: 'Bạn hãy nhập tên đầy đủ'),
+]);
+
 final phoneValidator = MultiValidator([
   RequiredValidator(errorText: 'Vui lòng nhập SĐT này'),
   MinLengthValidator(10, errorText: 'SĐT ít nhất 10 số'),
