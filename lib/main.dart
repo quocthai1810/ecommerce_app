@@ -34,6 +34,7 @@ class MyApp extends StatelessWidget {
           themeMode: ThemeMode.light,
           initialRoute: onbordingScreenRoute,
           getPages: AppPages.routes,
+
         ),
       ),
     ));
